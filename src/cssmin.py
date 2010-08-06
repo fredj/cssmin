@@ -124,10 +124,8 @@ def condense_zero_units(css):
 
 def condense_multidimensional_zeros(css):
     """Replace `:0 0 0 0;`, `:0 0 0;` etc. with `:0;`."""
-    
-    css = css.replace(":0 0 0 0;", ":0;")
-    css = css.replace(":0 0 0;", ":0;")
-    css = css.replace(":0 0;", ":0;")
+
+    re.sub(r":([\s0])*([;}])", r":0\2", css)
     
     # Revert `background-position:0;` to the valid `background-position:0 0;`.
     css = css.replace("background-position:0;", "background-position:0 0;")

@@ -92,6 +92,10 @@ def remove_unnecessary_semicolons(css):
     
     return re.sub(r";+\}", "}", css)
 
+def remove_unnecessary_quote(css):
+    """Remove unnecessary quotes in url."""
+
+    return re.sub(r"url\(\s?[\'\"]?([^'\"]+)[\'\"]?\s?\)", r"url(\1)", css)
 
 def remove_empty_rules(css):
     """Remove empty rules."""
@@ -194,6 +198,7 @@ def cssmin(css, wrap=None):
     css = condense_floating_points(css)
     css = normalize_rgb_colors_to_hex(css)
     css = condense_hex_colors(css)
+    css = remove_unnecessary_quote(css)
     if wrap is not None:
         css = wrap_css_lines(css, wrap)
     css = css.replace("___PSEUDOCLASSBMH___", '"\\"}\\""')
